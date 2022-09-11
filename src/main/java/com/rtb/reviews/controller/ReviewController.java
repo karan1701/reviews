@@ -40,7 +40,7 @@ public class ReviewController {
 		for (int j = 0; j < i; j++) {
 			review = ReviewController.getRandomNumberInRange(1, 100);
 			logger.info("Getting rating for review id: {}", review);
-			String rating = restTemplate.getForObject("http://ratings-app/ratings/" + review, String.class);
+			String rating = restTemplate.getForObject("http://ratings-app:9094/ratings/" + review, String.class);
 			Double bookRating = Double.valueOf(rating);
 			String comment = null;
 			if (Double.compare(bookRating, Double.valueOf(2.0)) < 0) {
