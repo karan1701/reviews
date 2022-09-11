@@ -20,7 +20,7 @@ import com.rtb.reviews.model.BookReview;
 public class ReviewController {
 
 	Logger logger = LoggerFactory.getLogger(ReviewController.class);
-	
+
 	@Autowired
 	RestTemplate restTemplate;
 
@@ -32,26 +32,37 @@ public class ReviewController {
 	@GetMapping("/{bookid}")
 	public List<BookReview> getBookReview(@PathVariable(name = "bookid") String bookId) {
 		logger.info("Getting book review for {}", bookId);
-		
+
 		List<BookReview> bookReviews = new ArrayList<>();
 		BookReview bookReview;
-		int i = rd.nextInt(4, 10);
+		int i = ReviewController.getRandomNumberInRange(4, 10);
 		int review = 0;
 		for (int j = 0; j < i; j++) {
-			review = rd.nextInt(1, 100);
+			review = ReviewController.getRandomNumberInRange(1, 100);
 			logger.info("Getting rating for review id: {}", review);
 			String rating = restTemplate.getForObject("http://localhost:9094/ratings/" + review, String.class);
 			Double bookRating = Double.valueOf(rating);
 			String comment = null;
 			if (Double.compare(bookRating, Double.valueOf(2.0)) < 0) {
-				comment = badComments[rd.nextInt(0, 2)];
+				comment = badComments[ReviewController.getRandomNumberInRange(0, 2)];
 			} else {
-				comment = goodComments[rd.nextInt(0, 2)];
+				comment = goodComments[ReviewController.getRandomNumberInRange(0, 2)];
 			}
 			bookReview = new BookReview(comment, bookRating);
 			bookReviews.add(bookReview);
 		}
 		return bookReviews;
+	}
+
+	private static int getRandomNumberInRange(int min, int max) {
+		Random r = new Random();
+		return r.ints(min, (max + 1)).limit(1).findFirst().getAsInt();
+
+	}
+
+	public static void main(String[] args) {
+		for (int i = 0; i < 10; i++)
+			System.out.println(ReviewController.getRandomNumberInRange(1, 100));
 	}
 
 }
