@@ -1,4 +1,4 @@
-apiVersio: apps/v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: reviews-app
@@ -13,10 +13,10 @@ spec:
     metadata:
       labels:
         app: reviews-app
-      spec:
-        containers:
-          - name: reviews-app
-            image: karan1701/reviews
-            imagePullPolicy: Always
-            ports:
-              - containerPort: 9093
+    spec:
+      containers:
+        - name: reviews-app
+          image: karan1701/reviews
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 9093
