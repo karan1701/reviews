@@ -1,0 +1,22 @@
+apiVersio: apps/v1
+kind: Deployment
+metadata:
+  name: reviews-app
+  labels:
+    app: reviews-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: reviews-app
+  template:
+    metadata:
+      labels:
+        app: reviews-app
+      spec:
+        containers:
+          - name: reviews-app
+            image: karan1701/reviews
+            imagePullPolicy: Always
+            ports:
+              - containerPort: 9093
