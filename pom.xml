@@ -36,7 +36,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
-		<finalName>reviews.jar</finalName>
+		<finalName>reviews</finalName>
 	</build>
 
 </project>
